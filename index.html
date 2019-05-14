@@ -1,0 +1,58 @@
+<html>
+  <html>
+  <head>
+    <script src="https://www.gstatic.com/charts/loader.js" type="text/javascript"></script> <!-- descargar la libreria loader.js -->
+     
+ <script type="text/javascript">
+  var jsonData;
+  function myCallback(dataWeGotViaJsonp) {
+   jsonData = dataWeGotViaJsonp['feeds'];
+   };
+   </script>
+  
+  
+ <script src="https://api.thingspeak.com/channels/778966/feeds.json?api_key=L0TT6N24TWHJCA5Y&amp;results=60&amp;callback=myCallback" type="text/javascript"></script>
+  
+ <script type="text/javascript">
+     
+   google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+ 
+      function drawChart() {
+        var data = new google.visualization.DataTable();
+  data.addColumn('datetime','Zeit');
+  data.addColumn('number','Luftfeuchtigkeit');
+  data.addColumn('number','Temperatur');
+ 
+  for (var i = 0; i < jsonData.length; i++){
+   var timestamp = jsonData[i]['created_at'];
+   var hum = jsonData[i]['field1'];
+   var temp = jsonData[i]['field2'];
+   data.addRow([new Date(timestamp), parseFloat(hum), parseFloat(temp)]);
+  };
+    
+   
+        var options = {       
+          title: 'Temperatur und Luftfeuchtigkeit', legend: { position: 'bottom' },
+          //curveType: 'function', 
+		  colors: ['red', 'blue'],
+		  interpolateNulls: true,
+          series: {0: {targetAxisIndex: 0}, 1: {targetAxisIndex: 1}},
+			vAxes: {0: {title: 'Temperatur'}, 1: {title: 'Luftfeuchtigkeit'}},
+			hAxis: {format: 'HH:mm'}
+			    
+        };
+ 
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+ 
+        chart.draw(data, options);
+      }
+    </script>
+  </head>
+  <body>
+    <div id="curve_chart" style="height: 500px; width: 900px;">
+</div>
+</body>
+</html>
+ 
+  </html>
