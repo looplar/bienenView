@@ -35,14 +35,14 @@
         function drawChart() {
             var data = new google.visualization.DataTable();
             data.addColumn('datetime','Zeit');
-            data.addColumn('number','Luftfeuchtigkeit');
             data.addColumn('number','Temperatur');
+            data.addColumn('number','Luftfeuchtigkeit');
 
             for (var i = 0; i < jsonData1.length; i++){
                 var timestamp = jsonData1[i]['created_at'];
-                var hum = jsonData1[i]['field1'];
-                var temp = jsonData1[i]['field2'];
-                data.addRow([new Date(timestamp), parseFloat(hum), parseFloat(temp)]);
+                var temp = jsonData1[i]['field1'];
+                var hum = jsonData1[i]['field2'];
+                data.addRow([new Date(timestamp), parseFloat(temp), parseFloat(hum)]);
             };
 
 
@@ -88,7 +88,7 @@
                 //curveType: 'function',
 		        colors: ['red', 'blue', 'orange', 'green'],
 		        interpolateNulls: true,
-                series: {0: {targetAxisIndex: 0}, 1: {targetAxisIndex: 1}, 2: {targetAxisIndex: 1}, 3: {targetAxisIndex: 1}},
+                series: {0: {targetAxisIndex: 0}, 1: {targetAxisIndex: 0}, 2: {targetAxisIndex: 1}, 3: {targetAxisIndex: 1}},
 			    vAxes: {0: {title: 'Temperatur'}, 1: {title: 'Luftfeuchtigkeit'}},
 			    hAxis: {format: 'HH:mm'}
             };
